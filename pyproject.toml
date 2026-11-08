@@ -19,11 +19,20 @@ classifiers = [
 ]
 dependencies = []
 
+[project.scripts]
+datalog-engine = "datalog_engine.__main__:main"
+
 [project.urls]
 Homepage = "https://github.com/Trysac/u408-datalog-engine"
 Source = "https://github.com/Trysac/u408-datalog-engine"
 Issues = "https://github.com/Trysac/u408-datalog-engine/issues"
 Changelog = "https://github.com/Trysac/u408-datalog-engine/blob/main/CHANGELOG.md"
+
+[project.optional-dependencies]
+audit = [
+    "trysac-audit-event-schema",
+    "trysac-tamper-evident-log",
+]
 
 [build-system]
 requires = ["hatchling"]
@@ -39,11 +48,13 @@ include = ["src", "tests", "docs", "README.md", "LICENSE", "CHANGELOG.md", "SECU
 [dependency-groups]
 dev = [
     "bandit>=1.9.4",
+    "hypothesis>=6.100,<7",
     "mypy>=2.4.1",
     "pip-audit>=2.10.1",
     "pytest>=9.2.0",
     "pytest-cov>=7.1.0",
     "ruff>=0.17.3",
+    "trysac-md-knowledge-graph",
 ]
 
 [tool.ruff]
@@ -75,3 +86,8 @@ branch = true
 [tool.coverage.report]
 fail_under = 85
 show_missing = true
+
+[tool.uv.sources]
+trysac-tamper-evident-log = { git = "https://github.com/Trysac/u065-tamper-evident-log", rev = "v0.1.0" }
+trysac-audit-event-schema = { git = "https://github.com/Trysac/u163-audit-event-schema", rev = "v0.1.0" }
+trysac-md-knowledge-graph = { git = "https://github.com/Trysac/u087-md-knowledge-graph", rev = "v0.1.0" }

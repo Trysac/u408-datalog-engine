@@ -1,21 +1,33 @@
-"""In-memory stratified Datalog engine in pure Python with semi-naive evaluation, DRed incremental view updates, aggregates, and derivation explanations."""
+"""In-memory stratified Datalog engine with semi-naive evaluation,
+DRed incremental view updates, aggregates, and derivation explanations.
+"""
 
 from __future__ import annotations
 
-__all__ = ["__version__", "normalize"]
+from datalog_engine.ast import DerivationNode
+from datalog_engine.engine import Engine
+from datalog_engine.errors import (
+    DatalogError,
+    ParseError,
+    ProgramLimitError,
+    SafetyError,
+    StratificationError,
+)
 
-__version__ = "0.1.0"
+__all__ = [
+    "DatalogError",
+    "DerivationNode",
+    "Engine",
+    "ParseError",
+    "ProgramLimitError",
+    "SafetyError",
+    "StratificationError",
+    "main",
+]
 
 
-def normalize(value: str) -> str:
-    """Return ``value`` trimmed and lower-cased.
+def main(argv: list[str] | None = None) -> int:
+    """CLI entry point for datalog-engine."""
+    from datalog_engine.__main__ import main as _main
 
-    Placeholder API created by the template: replace it with the utility's real behavior.
-
-    Raises:
-        ValueError: if ``value`` is empty or only whitespace.
-    """
-    cleaned = value.strip()
-    if not cleaned:
-        raise ValueError("value must not be empty")
-    return cleaned.lower()
+    return _main(argv)

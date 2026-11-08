@@ -1,29 +1,12 @@
 # Architecture
 
-## Purpose
+## Overview
 
-`trysac-datalog-engine` is a small, dependency-free Python library: In-memory stratified Datalog engine in pure Python with semi-naive evaluation, DRed incremental view updates, aggregates, and derivation explanations.
-
-## Shape
-
-```text
-caller code --> datalog_engine (public API in __init__.py)
-                    |
-                    +-- pure functions, no I/O, no global state
-```
-
-- **Public API**: the names listed in `__all__` of `src/datalog_engine/__init__.py`. Anything else is
-  internal and may change without a major version.
-- **Errors**: invalid input raises built-in exceptions (`ValueError`, `TypeError`) with a clear
-  message; the library never prints or exits.
-- **Side effects**: none. If a feature needs I/O, isolate it in its own module behind a small
-  interface and record the choice in an ADR.
-
-## Quality contract
-
-`scripts/check.py` is the single definition of the gates; `fabrica.json` tells the factory and CI
-how to run it. See [TESTING.md](TESTING.md).
-
-## Decisions
-
-Architecture decisions are recorded in [decisions/](decisions/) as numbered ADRs.
+`trysac-datalog-engine` implements an in-memory stratified Datalog engine with:
+1. **Lexer and Parser**: Recursive descent parser supporting literals, integers, strings, variables, comparisons, negative literals, and head aggregate expressions (`count`, `sum`, `min`, `max`).
+2. **Safety Validator**: Enforces range restriction ensuring all variables in rule heads, negated literals, and comparisons are bound by positive relational body literals.
+3. **Stratification via Tarjan's SCC Algorithm**: Builds a dependency graph between predicate symbols. Disallows cycles containing negation or aggregation and assigns stratum layers.
+4. **Semi-naive Bottom-up Evaluator**: Efficient fixpoint loop evaluating only new tuples (deltas) generated in each iteration.
+5. **Incremental Maintenance (DRed)**: Implements Delete and Rederive algorithm for fact retractions, maintaining derived relations without recomputing from scratch.
+6. **Derivation Proofs**: `engine.explain(fact)` reconstructs the full derivation tree showing which rules and facts proved the query.
+7. **Optional Audit Adapter**: Pluggable integration with `trysac-tamper-evident-log` and `trysac-audit-event-schema`.
