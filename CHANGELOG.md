@@ -9,4 +9,5 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Initial release: stratified Datalog engine with semi-naive evaluation, DRed incremental maintenance, aggregates, and derivation trees.
 - Initial project structure from the factory utility template.
