@@ -1,7 +1,6 @@
 # datalog-engine
 
-[![PyPI version](https://img.shields.io/pypi/v/trysac-datalog-engine)](https://pypi.org/project/trysac-datalog-engine/)
-[![License: MIT](https://img.shields.io/pypi/l/trysac-datalog-engine)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![CI](https://github.com/Trysac/u408-datalog-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/Trysac/u408-datalog-engine/actions/workflows/ci.yml)
 
 In-memory stratified Datalog engine in pure Python with semi-naive bottom-up evaluation, DRed incremental view updates, aggregates, and derivation explanations.
@@ -12,10 +11,12 @@ Access control policies and graph lineage systems require recursive reasoning th
 
 ## Installation
 
+Not published to PyPI yet. Install it from GitHub:
+
 ```sh
-pip install trysac-datalog-engine
+pip install "git+https://github.com/Trysac/u408-datalog-engine"
 # Optional audit logging support
-pip install trysac-datalog-engine[audit]
+pip install "git+https://github.com/Trysac/u408-datalog-engine"
 ```
 
 Requires Python 3.10 or newer.
